@@ -81,6 +81,7 @@ mongoose.Promise = global.Promise;
 //     }
 // }
 
+// https://mongoosejs.com/docs/connections.html#error-handling
 const connectToMongoDB = async () => {
     try {
         await mongoose.connect(config.mongo.uri);
