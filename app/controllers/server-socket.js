@@ -1,5 +1,3 @@
-"use strict";
-
 var iosockets = null; //holds all the clients io.sockets
 
 var players = require("./players"),
