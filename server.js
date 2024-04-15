@@ -1,5 +1,3 @@
-"use strict";
-
 // Default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
@@ -237,7 +235,7 @@ serverSocketStartSIO(io);
 serverSocketNewStartSIO(ioNew);
 serverSocketNewStartSIOWebsocketOnly(ioNewWebsocketOnly);
 
-var wss = new WebSocket.Server({ server: server, path: "/websocket" });
+const wss = new WebSocket.Server({ server: server, path: "/websocket" });
 // require("./app/controllers/server-socket-ws").startSIO(wss);
 serverSocketWsStartSIO(wss);
 server.on("upgrade", function upgrade(request, socket, head) {
