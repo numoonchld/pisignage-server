@@ -64,26 +64,26 @@ export const serverAssetsStoreLinkDetails = (name, type, categories, cb) => {
     });
 };
 
-export const serverAssetsUpdateObject = (req, res) => {
-    AssetModel.load(req.body.dbdata._id, function (err, asset) {
-        if (err || !asset) {
-            return restwareSendError(res, "Categories saving error", err);
-        } else {
-            delete req.body.dbdata.__v; //do not copy version key
-            asset = _.extend(asset, req.body.dbdata);
-            asset.save(function (err, data) {
-                if (err)
-                    return restwareSendError(
-                        res,
-                        "Categories saving error",
-                        err
-                    );
+// export const serverAssetsUpdateObject = (req, res) => {
+//     AssetModel.load(req.body.dbdata._id, function (err, asset) {
+//         if (err || !asset) {
+//             return restwareSendError(res, "Categories saving error", err);
+//         } else {
+//             delete req.body.dbdata.__v; //do not copy version key
+//             asset = _.extend(asset, req.body.dbdata);
+//             asset.save(function (err, data) {
+//                 if (err)
+//                     return restwareSendError(
+//                         res,
+//                         "Categories saving error",
+//                         err
+//                     );
 
-                return restwareSendSuccess(res, "Categories saved", data);
-            });
-        }
-    });
-};
+//                 return restwareSendSuccess(res, "Categories saved", data);
+//             });
+//         }
+//     });
+// };
 
 export const serverAssetsUpdatePlaylist = async (playlist, assets) => {
     try {
@@ -101,35 +101,36 @@ export const serverAssetsUpdatePlaylist = async (playlist, assets) => {
     } catch (error) {
         console.log("error in db update for playlist in assets " + error);
     }
+    return;
 
-    AssetModel.update(
-        { playlists: playlist },
-        { $pull: { playlists: playlist } },
-        { multi: true },
-        function (err, num) {
-            if (err) {
-                return console.log(
-                    "error in db update for playlist in assets " + err
-                );
-            } else {
-                //console.log("Deleted playlist from "+num+" records")
+    // AssetModel.update(
+    //     { playlists: playlist },
+    //     { $pull: { playlists: playlist } },
+    //     { multi: true },
+    //     function (err, num) {
+    //         if (err) {
+    //             return console.log(
+    //                 "error in db update for playlist in assets " + err
+    //             );
+    //         } else {
+    //             //console.log("Deleted playlist from "+num+" records")
 
-                AssetModel.update(
-                    { name: { $in: assets } },
-                    { $push: { playlists: playlist } },
-                    { multi: true },
-                    function (err, num) {
-                        if (err) {
-                            return console.log(
-                                "error in db update for playlist in assets " +
-                                    err
-                            );
-                        } else {
-                            //console.log("Updated playlist to "+num+" records")
-                        }
-                    }
-                );
-            }
-        }
-    );
+    //             AssetModel.update(
+    //                 { name: { $in: assets } },
+    //                 { $push: { playlists: playlist } },
+    //                 { multi: true },
+    //                 function (err, num) {
+    //                     if (err) {
+    //                         return console.log(
+    //                             "error in db update for playlist in assets " +
+    //                                 err
+    //                         );
+    //                     } else {
+    //                         //console.log("Updated playlist to "+num+" records")
+    //                     }
+    //                 }
+    //             );
+    //         }
+    //     }
+    // );
 };
